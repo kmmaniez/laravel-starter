@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,6 @@ Route::get('/', function () {
 Route::get('/admin', function () {
     return view('admin.dashboard');
 });
+
+Route::resource('products', ProductController::class)
+            ->only(['index','create','store','edit','update','destroy']);
