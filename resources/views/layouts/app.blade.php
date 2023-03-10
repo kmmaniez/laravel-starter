@@ -18,16 +18,17 @@
     <!-- Custom styles for this template-->
     <link href="{{ url('sb-admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
-    {{-- @if (route('products.index')) --}}
+    @if (route('products.index'))
     {{-- DataTables --}}
     <link href="{{ url('sb-admin/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
-    {{-- @endif --}}
+    @endif
 
 </head>
 
 <body id="page-top">
-
+    
+    @include('sweetalert::alert')
     <!-- Page Wrapper -->
 
     <div id="wrapper">
@@ -66,6 +67,10 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ url('sb-admin/js/sb-admin-2.min.js') }}"></script>
+
+    <!-- Sweetalert -->
+    <script src="{{ url('vendor/sweetalert/sweetalert.all.js') }}"></script>
+    <script src="{{ url('js/sweetalert.js') }}"></script>
 
     <!-- Page level plugins -->
     <script src="{{ url('sb-admin/vendor/datatables/jquery.dataTables.min.js') }}"></script>
