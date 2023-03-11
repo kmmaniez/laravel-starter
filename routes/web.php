@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Blog\CategoryController;
+use App\Http\Controllers\Blog\PostController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,5 +24,15 @@ Route::get('/admin', function () {
     return view('admin.dashboard');
 });
 
-Route::resource('products', ProductController::class)
-            ->only(['index','create','store','edit','update','destroy']);
+Route::resource('products', ProductController::class)->only(['index','create','store','edit','update','destroy']);
+
+Route::prefix('blog')->group(function () {
+    
+    Route::get('/', function () {
+        return view('admin.dashboard');
+    });
+
+    Route::resource('post', PostController::class)->only(['index','create','store','edit','update','destroy']);
+    Route::resource('category', CategoryController::class)->only(['index','create','store','edit','update','destroy']);
+    
+});
