@@ -14,7 +14,7 @@
                         <!-- Nav Item - User Information -->
                         {{-- <li class="nav-item dropdown no-arrow"> --}}
                             <a class="nav-link" href="#">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Selamat datang, <strong>s</strong></span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Welcome, <strong>Admin</strong></span>
                             </a>
                         {{-- </li> --}}
 
