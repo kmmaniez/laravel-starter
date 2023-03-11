@@ -4,7 +4,7 @@
     
     <div class="container-fluid">
         <!-- Page Heading -->
-        <h1 class="h3 mb-5 text-gray-800">Halaman {{ $title }}</h1>
+        <h1 class="h3 mb-5 text-gray-800">{{ $title_page }} Page</h1>
 
         <!-- Content Row -->
 
@@ -16,7 +16,7 @@
                     <!-- Card Header - Dropdown -->
                     <div
                         class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ $title }}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Form {{ $title_page }}</h6>
                     </div>
                     
                     <!-- Card Body -->
@@ -70,8 +70,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary btn-md">Simpan Barang</button>
-                            <a class="btn btn-danger btn-md delete" href="/products">Hapus</a>
+                            <button class="btn btn-primary btn-md">Save Product</button>
+                            <a class="btn btn-default btn-md" href="/products">Back</a>
                         </form>
                     </div>
                 </div>
