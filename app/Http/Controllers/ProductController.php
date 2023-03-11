@@ -17,8 +17,8 @@ class ProductController extends Controller
     {
         //
         return view('admin.products.index', [
-            'title'     => 'Data Barang',
-            'produk'    => Product::all()
+            'title_page'    => 'Data Products',
+            'product'       => Product::all()
         ]);
     }
 
@@ -39,7 +39,7 @@ class ProductController extends Controller
             array_push($ukuran, $i);
         }
         return view('admin.products.create',[
-            'title'         => 'Tambah Stok Barang',
+            'title_page'    => 'Add Product',
             'products'      => ['id' => 1, 'name' => 'okok'],
             'listwarna'     => $warna,
             'listukuran'    => $ukuran
@@ -88,9 +88,9 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         //
-        return view('admin.products.edit-product', [
-            'title'         => 'Edit Product',
-            'produk'        => $product,
+        return view('admin.products.edit', [
+            'title_page'    => 'Edit Product',
+            'product'       => $product,
         ]);
     }
 
