@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>SB Admin 2 - Dashboard</title>
 
@@ -44,7 +45,9 @@
                 <x-top-bar></x-top-bar>
 
                 <!-- Begin Page Content -->
+
                 @yield('konten')
+
                 <!-- End Page Content -->
 
             </div>
@@ -54,7 +57,8 @@
 
         </div>
         <!-- End of Content Wrapper -->
-
+        @include('components.create-modal')
+        
     </div>
     <!-- End of Page Wrapper -->
 
@@ -70,7 +74,7 @@
 
     <!-- Sweetalert -->
     <script src="{{ url('vendor/sweetalert/sweetalert.all.js') }}"></script>
-    <script src="{{ url('js/sweetalert.js') }}"></script>
+    <script src="{{ url('js/main.js') }}"></script>
 
     <!-- Page level plugins -->
     <script src="{{ url('sb-admin/vendor/datatables/jquery.dataTables.min.js') }}"></script>
