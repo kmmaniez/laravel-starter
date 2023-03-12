@@ -20,49 +20,41 @@ class DatabaseSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
+        // permission lists
         $permission_lists = [
-            'lihat barang',
-            'tambah barang',
-            'edit barang',
-            'hapus barang',
-            'lihat laporan',
-            'tambah laporan',
-            'edit laporan',
-            'hapus laporan'
+            'tambah data',
+            'edit data',
+            'hapus data'
         ];
         foreach ($permission_lists as $key ) {
-            # code...
             Permission::create(['name' => $key]);
         }
 
-        // // create roles and assign existing permissions
+        // create owner role and assign the permissions
         $role1 = Role::create(['name' => 'owner']);
         $role1->givePermissionTo([
-            'lihat laporan',
-            'lihat barang',
+            'tambah data',
+            'edit data',
+            'hapus data'
         ]);
         
+        // create admin role and assign the permissions
         $role2 = Role::create(['name' => 'admin']);
         $role2->givePermissionTo([
-            'lihat barang',
-            'tambah barang',
-            'edit barang',
-            'hapus barang',
-            'lihat laporan',
-            'tambah laporan',
-            'edit laporan',
-            'hapus laporan'
+            'tambah data',
+            'edit data'
         ]);
 
-        // // create demo users
+        // create owner
         $user = \App\Models\User::factory()->create([
-            'name' => 'Owner Program',
+            'name'  => 'Owner Program',
             'email' => 'owner@gmail.com',
         ]);
         $user->assignRole($role1);
 
+        // create admin
         $user = \App\Models\User::factory()->create([
-            'name' => 'Admin Program',
+            'name'  => 'Admin Program',
             'email' => 'admin@gmail.com',
         ]);
         $user->assignRole($role2);
