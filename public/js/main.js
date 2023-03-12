@@ -26,3 +26,9 @@ deleteButton.forEach(btn => {
       })
   })
 })
+
+$('body').on('click', '#create-post', function () {
+
+  //open modal
+  $('#modal-create').modal('show');
+});
