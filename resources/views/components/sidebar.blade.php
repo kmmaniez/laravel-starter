@@ -32,12 +32,6 @@
                 <span>Products</span></a>
             </li>
             
-            <li class="nav-item {{ (request()->is('profile*')) ? 'active' : '' }}">
-                <a class="nav-link" href="/profile">
-                    <i class="fas fa-fw fa-user"></i>
-                <span>Profile</span></a>
-            </li>
-            
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item {{ (request()->is('blog*')) ? 'active' : '' }}">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -57,14 +51,6 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Nav Item - Log Out -->
-            <li class="nav-item">
-                <form action="" method="post">
-                    @csrf
-                    <button class="btn btn-md nav-link">Logout</button>
-                </form>
-            </li>
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
