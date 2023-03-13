@@ -12,12 +12,32 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
-                        {{-- <li class="nav-item dropdown no-arrow"> --}}
-                            <a class="nav-link" href="#">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Welcome, <strong>Admin</strong></span>
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Welcome, <strong>{{ Auth::user()->name }}</strong></span>
+                                <img class="img-profile rounded-circle"
+                                    src="{{ asset('sb-admin/img/undraw_profile.svg') }}">
                             </a>
-                        {{-- </li> --}}
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="{{ route('profile.index') }}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <form method="post" action="{{ route('logout') }}">
+                                    @csrf
 
+                                    <a class="dropdown-item" href="#" onclick="event.preventDefault();
+                                    this.closest('form').submit();">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout
+                                    </a>
+                                </form>
+                            </div>
+                        </li>
                     </ul>
 
                 </nav>
