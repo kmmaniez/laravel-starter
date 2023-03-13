@@ -1,6 +1,6 @@
-const formData     = document.querySelectorAll('form');
-const BASE_URL     = document.documentURI
-const deleteButton = document.querySelectorAll('.delete');
+const formData      = document.querySelectorAll('form');
+const BASE_URL      = document.documentURI;
+const deleteButton  = document.querySelectorAll('.delete');
 
 deleteButton.forEach(btn => {
   btn.addEventListener('click', (e) => {
@@ -27,7 +27,13 @@ deleteButton.forEach(btn => {
   })
 })
 
-$('body').on('click', '#create-post', function () {
+$(document).ready(function () {
+  setTimeout(() => {
+    $('.alert-notif').css('display','none');
+  }, 2000);
+})
+
+$('body').on('click', '#create-posts', function () {
 
   //open modal
   $('#modal-create').modal('show');
