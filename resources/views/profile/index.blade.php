@@ -40,12 +40,12 @@
                                 @method('patch')
                                 <div class="form-group">
                                     <label for="name">Name</label>
-                                    <input type="text" name="name" id="name" class="form-control" value="{{ Auth::user()->name }}" required>
+                                    <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $user->name) }}" required>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" name="email" id="email" class="form-control" value="{{ Auth::user()->email }}">
+                                    <input type="email" name="email" id="email" class="form-control" value="{{ Auth::user()->email }}" required>
                                 </div>
                                 
                                 <div class="form-group">
@@ -83,19 +83,19 @@
                                 @method('put')
                                 <div class="form-group">
                                     <label for="current_password">Current Password</label>
-                                    <input type="password" name="current_password" id="current_password" class="form-control">
+                                    <input type="password" name="current_password" id="current_password" class="form-control" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="password">New Password</label>
-                                    <input type="password" name="password" id="password" class="form-control">
+                                    <input type="password" name="password" id="password" class="form-control" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="password_confirmation">Confirm Password</label>
-                                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
+                                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
                                 </div>
-                                <button class="btn btn-md btn-primary">Update password</button>
+                                <button class="btn btn-md btn-primary" id="update_pass">Update password</button>
                             </form>
                         </div>
                     </div>
