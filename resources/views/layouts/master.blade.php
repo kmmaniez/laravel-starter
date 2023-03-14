@@ -19,6 +19,8 @@
     <!-- Custom styles for this template-->
     <link href="{{ url('sb-admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+
     @if (route('products.index'))
     {{-- DataTables --}}
     <link href="{{ url('sb-admin/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
