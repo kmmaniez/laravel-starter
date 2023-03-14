@@ -12,16 +12,16 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
 
-    public function index(): View
-    {
-        return view('profile.index', [
-            'title_page'    => 'Data Products'
-        ]);
-    }
+    // public function index(): View
+    // {
+    //     return view('profile.index', [
+    //         'title_page'    => 'Data Products'
+    //     ]);
+    // }
     
      public function edit(Request $request): View
     {
-        return view('profile.edit', [
+        return view('profile.index', [
             'user' => $request->user(),
         ]);
     }
@@ -38,21 +38,4 @@ class ProfileController extends Controller
         return Redirect::route('profile.index')->with('status', 'profile-updated');
     }
 
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current-password'],
-        ]);
-
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
-    }
 }
