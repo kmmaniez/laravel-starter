@@ -36,7 +36,7 @@
 
     <div id="wrapper">
 
-        <x-sidebar></x-sidebar>
+        <x-admin.sidebar></x-admin.sidebar>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -44,7 +44,7 @@
             <!-- Main Content -->
             <div id="content">
 
-                <x-top-bar></x-top-bar>
+                <x-admin.top-bar></x-admin.top-bar>
 
                 <!-- Begin Page Content -->
 
@@ -55,11 +55,11 @@
             </div>
             <!-- End of Main Content -->
 
-            <x-footer></x-footer>
+            {{-- <x-footer></x-footer> --}}
 
         </div>
         <!-- End of Content Wrapper -->
-        @include('components.create-modal')
+        @include('components.admin.create-modal')
         
     </div>
     <!-- End of Page Wrapper -->
