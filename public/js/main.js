@@ -2,6 +2,21 @@ const formData      = document.querySelectorAll('form');
 const BASE_URL      = document.documentURI;
 const deleteButton  = document.querySelectorAll('.delete');
 
+const newPassword   = document.querySelector('#password');
+const confPassword  = document.querySelector('#password_confirmation');
+const btnUpdatePass = document.querySelector('#update_pass');
+
+// Default disable button update password
+btnUpdatePass.disabled = true;
+confPassword.addEventListener('keyup', function () {
+  if (newPassword.value === confPassword.value) {
+    // button enabled
+    btnUpdatePass.disabled = false;
+  }else{
+    btnUpdatePass.disabled = true;
+  }
+})
+
 deleteButton.forEach(btn => {
   btn.addEventListener('click', (e) => {
     e.preventDefault();
