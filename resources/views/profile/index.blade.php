@@ -14,7 +14,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Photo Profile</h6>
                     </div>
                     <div class="card-body">
-                        <img src="{{ asset('sb-admin/img/user_profile.jpg') }}" class="img-fluid img-thumbnail" alt="...">
+                        <img src="{{ asset('sb-admin/img/user_profile.jpg') }}" class="img-fluid img-thumbnail" alt="Photo profile">
                     </div>
                 </div>
     
@@ -26,7 +26,7 @@
                 <div class="card shadow mb-4">
                     <a href="#profileinfo" class="d-block card-header py-3" data-toggle="collapse"
                         role="button" aria-expanded="true" aria-controls="profileinfo">
-                        <h6 class="m-0 font-weight-bold text-primary">Profile Information</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Profile Settings</h6>
                     </a>
                     <div class="collapse show" id="profileinfo">
                         <div class="card-body">
@@ -35,12 +35,12 @@
                                 <div class="alert alert-success alert-notif"><i class="fas fa-fw fa-check"></i> <strong>Profile settings saved</strong></div>
                             @endif
                             
-                            <form action="{{ route('profile.update') }}" method="post">
+                            <form action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 @method('patch')
                                 <div class="form-group">
                                     <label for="name">Name</label>
-                                    <input type="text" name="name" id="name" class="form-control" value="{{ Auth::user()->name }}">
+                                    <input type="text" name="name" id="name" class="form-control" value="{{ Auth::user()->name }}" required>
                                 </div>
                                 
                                 <div class="form-group">
@@ -50,12 +50,12 @@
                                 
                                 <div class="form-group">
                                     <label for="address">Address</label>
-                                    <textarea type="text" name="address" id="address" class="form-control" rows="3">{{ Auth::user()->created_at }}</textarea>
+                                    <textarea type="text" name="address" id="address" class="form-control" rows="3"></textarea>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="address">Address</label>
-                                    <input type="file" name="" id="" class="form-control">
+                                    <label for="photo" class="form-label">Photo</label>
+                                    <input type="file" name="photo" id="photo" class="form-control">
                                 </div>
 
                                 <button class="btn btn-md btn-primary">Update profile</button>
@@ -69,13 +69,15 @@
                 <div class="card shadow mb-4">
                     <a href="#changepassword" class="d-block card-header py-3" data-toggle="collapse"
                         role="button" aria-expanded="true" aria-controls="changepassword">
-                        <h6 class="m-0 font-weight-bold text-primary">Security</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Security Settings</h6>
                     </a>
                     <div class="collapse show" id="changepassword">
                         <div class="card-body">
+
                             @if (session('status') === 'password-updated')
-                                <div class="alert alert-success alert-notif"><i class="fas fa-fw fa-check"></i> <strong>Profile settings saved</strong></div>
+                                <div class="alert alert-success alert-notif"><i class="fas fa-fw fa-check"></i> <strong>Password saved</strong></div>
                             @endif
+
                             <form action="{{ route('password.update') }}" method="post">
                                 @csrf
                                 @method('put')
@@ -83,10 +85,12 @@
                                     <label for="current_password">Current Password</label>
                                     <input type="password" name="current_password" id="current_password" class="form-control">
                                 </div>
+
                                 <div class="form-group">
                                     <label for="password">New Password</label>
                                     <input type="password" name="password" id="password" class="form-control">
                                 </div>
+
                                 <div class="form-group">
                                     <label for="password_confirmation">Confirm Password</label>
                                     <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
