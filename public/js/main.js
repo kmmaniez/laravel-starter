@@ -30,6 +30,7 @@ deleteButton.forEach(btn => {
 $(document).ready(function () {
   setTimeout(() => {
     $('.alert-notif').css('display','none');
+    $('.alert-notif').remove()
   }, 2000);
 })
 
