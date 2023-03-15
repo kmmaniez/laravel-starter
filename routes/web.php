@@ -34,11 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::prefix('blog')->group(function () {
 
         // Default Route Blog prefix
-        Route::view('/','admin.dashboard');
-
+        Route::get('/', fn() => redirect()->route('dashboard'));
         // Route Post
         Route::resource('post', PostController::class)->only(['index','create','store','edit','update','destroy']);
-        
         // Route Category
         Route::resource('category', CategoryController::class)->only(['index','create','store','edit','update','destroy']);
     });
