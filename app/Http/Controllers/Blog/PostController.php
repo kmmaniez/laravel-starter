@@ -30,6 +30,14 @@ class PostController extends Controller
     public function create()
     {
         //
+        return view('admin.blog.posts.create',[
+            'title_page'    => 'Create Post',
+            'categories'    => [
+                ['name' => 'Tech'],
+                ['name' => 'Lifestyle'],
+                ['name' => 'Travel'],
+            ]
+        ]);
     }
 
     /**
