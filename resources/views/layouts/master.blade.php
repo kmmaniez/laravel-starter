@@ -19,6 +19,7 @@
     <!-- Custom styles for this template-->
     <link href="{{ url('sb-admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+    <!-- Custom css -->
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
     @if (route('products.index'))
@@ -60,6 +61,7 @@
         </div>
         <!-- End of Content Wrapper -->
         @include('components.admin.create-modal')
+        @include('components.admin.update-modal')
         
     </div>
     <!-- End of Page Wrapper -->
@@ -76,6 +78,8 @@
 
     <!-- Sweetalert -->
     <script src="{{ url('vendor/sweetalert/sweetalert.all.js') }}"></script>
+    
+    <!-- Custom scripts -->
     <script src="{{ url('js/main.js') }}"></script>
 
     <!-- Page level plugins -->
