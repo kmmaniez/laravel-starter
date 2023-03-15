@@ -24,14 +24,14 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody id="table-posts">
+                        <tbody id="table">
                             @forelse ($categories as $category)
-                            <tr id="index_{{ $category->id }}">
-                                <td style="width: 150px">{{ $loop->iteration }}</td>
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $category->name }}</td>
-                                <td style="width: 400px;">
-                                    <a href="javascript:void(0)" id="btn-edit-post" data-id="{{ $category->id }}" class="btn btn-primary btn-sm">EDIT</a>
-                                    <a href="javascript:void(0)" id="btn-delete-post" data-id="{{ $category->id }}" class="btn btn-danger btn-sm">DELETE</a>
+                                <td>
+                                    <a href="#" id="edit-post" data-id="{{ $category->id }}" class="btn btn-primary btn-sm">Edit</a>
+                                    <a href="#" id="delete-post" data-id="{{ $category->id }}" class="btn btn-danger btn-sm">Delete</a>
                                 </td>
                             </tr>
                             @empty
