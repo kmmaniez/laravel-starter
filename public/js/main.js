@@ -1,17 +1,20 @@
-const formData      = document.querySelectorAll('form');
-const BASE_URL      = document.documentURI;
-const deleteButton  = document.querySelectorAll('.delete');
+// Get token from your app
+let token             = document.getElementsByTagName('meta')[5].getAttribute('content');
 
-const newPassword   = document.querySelector('#password');
-const confPassword  = document.querySelector('#password_confirmation');
-const btnUpdatePass = document.querySelector('#update_pass');
-const createpost = document.querySelector('#create-post')
+// Profile section
+const newPassword     = document.querySelector('#password');
+const confPassword    = document.querySelector('#password_confirmation');
+const btnUpdatePass   = document.querySelector('#update_pass');
+
+// Category section
+const btnCreatePost   = document.querySelector('#create-post');
+const deleteButton    = document.querySelectorAll('#delete-post');
+
 // Default disable button update password
 if (window.location.pathname === '/profile') {
   btnUpdatePass.disabled = true;
   confPassword.addEventListener('keyup', function () {
     if (newPassword.value === confPassword.value) {
-      // button enabled
       btnUpdatePass.disabled = false;
     }else{
       btnUpdatePass.disabled = true;
@@ -24,105 +27,174 @@ if (window.location.pathname === '/profile') {
     }, 1800);
   })
 }
-
+// Event delete button category
 deleteButton.forEach(btn => {
   btn.addEventListener('click', (e) => {
     e.preventDefault();
-    // console.log(BASE_URL);
+    let categoryId  = btn.getAttribute('data-id');
+
     Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        text: "Do you want to delete this data ?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title:'Deleted',
-            text:'Data has been deleted.',
-            icon: 'success',
-            showConfirmButton: false,
-          })
-        }
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: window.location.pathname + '/' + categoryId,
+              type: "DELETE",
+              cache: false,
+              data: {
+                  "_token": token
+              },
+              success:function(response){ 
+                  Swal.fire({
+                      type: 'success',
+                      icon: 'success',
+                      title: `${response.message}`,
+                      showConfirmButton: false
+                  });
+                  reloadPage(1000);
+              }
+            });
+            }
+        })
       })
-  })
 })
 
+// Prevent loop modal in other URL
+if (window.location.pathname === '/blog/category') {
 
-
-// Open modal
-$('body').on('click', '#create-post', function () {
-  $('#modal-create').modal('show');
-});
-
-// Save from modal
-$('#save').click(function(e) {
-  e.preventDefault();
-
-  // Define variable & get value
-  let categoryName    = $('#category_name').val();
-  let token           = $("meta[name='csrf-token']").attr("content");
-
-  $.ajax({
-      url: window.location.pathname,
-      type: "POST",
-      cache: false,
-      data: {
-          "category_name": categoryName,
-          "_token": token
-      },
-      // If success
-      success:function(response){
-
-          Swal.fire({
-              type: 'success',
-              icon: 'success',
-              title: `${response.message}`,
-              showConfirmButton: false,
-              timer: 3000
-          });
-
-          // Data
-          let post = `
-              <tr id="index_${response.data.id}">
-                  <td>${response.data.name}</td>
-                  <td class="text-center">
-                      <a href="javascript:void(0)" id="btn-edit-post" data-id="${response.data.id}" class="btn btn-primary btn-sm">EDIT</a>
-                      <a href="javascript:void(0)" id="btn-delete-post" data-id="${response.data.id}" class="btn btn-danger btn-sm">DELETE</a>
-                  </td>
-              </tr>
-          `;
-          //append to table
-          $('#table-posts').prepend(post);
-          
-          //clear form
-          $('#category_name').val('');
-          
-          //close modal
-          $('#modal-create').modal('hide');
-          setTimeout(() => {
-            window.location.reload();
-          }, 1500);
-
-      },
-      // If fails
-      error:function(error){
-          console.log(error);
-          if(error.responseJSON.category_name[0]) {
-
-              //show alert
-              $('#alert_category').removeClass('d-none');
-              $('#alert_category').addClass('d-block');
-
-              //add message to alert
-              $('#alert_category').html(error.responseJSON.category_name[0]);
-
-          } 
-
-      }
-
+  // Open modal create
+  $('body').on('click', '#create-post', function () {
+    $('#modal-create').modal('show');
+  
+    // Save from modal
+    $('#save').click(function(e) {
+      e.preventDefault();
+  
+      // Define variable & get value
+      let categoryName    = $('#category_name').val();
+  
+      $.ajax({
+          url: window.location.pathname,
+          type: "POST",
+          cache: false,
+          data: {
+              "category_name": categoryName,
+              "_token": token
+          },
+          // If success
+          success:function(response){
+              Swal.fire({
+                  type: 'success',
+                  icon: 'success',
+                  title: `${response.message}`,
+                  showConfirmButton: false,
+                  timer: 3000
+              });
+  
+              // Clear form
+              $('#category_name').val('');
+              // Close modal
+              $('#modal-create').modal('hide');
+              // Refresh page
+              setTimeout(() => {
+                window.location.reload();
+              }, 1500);
+  
+          },
+          // If fails
+          error:function(error){
+              if(error.responseJSON.category_name[0]) {
+                  // Show alert
+                  $('#alert_category').removeClass('d-none');
+                  $('#alert_category').addClass('d-block');
+  
+                  // Add message to alert
+                  $('#alert_category').html(error.responseJSON.category_name[0]);
+              }
+          }
+  
+      });
+      
+    });
+  
   });
   
-}); 
+  // Open modal edit
+  $('body').on('click', '#edit-post', function () {
+    let categoryId    = $(this).data('id');
+    let url           = window.location.pathname + '/' + categoryId;
+  
+    // Get data
+    $.ajax({
+      url: url,
+      type: "GET",
+      cache: false,
+      success:function(response){
+        $('#category_name_update').val(response.data.name);
+        $('#modal-update').modal('show');
+      }
+    });
+   
+    // Process update
+    $('#update').click(function(e) {
+      e.preventDefault();
+  
+      let categoryName    = $('#category_name_update').val();
+  
+      $.ajax({
+          url: url,
+          type: "PUT",
+          cache: false,
+          data: {
+              "id": categoryId,
+              "category_name_update": categoryName,
+              "_token": token
+          },
+          // If success
+          success:function(response){
+              Swal.fire({
+                  type: 'success',
+                  icon: 'success',
+                  title: `${response.message}`,
+                  showConfirmButton: false,
+              });
+              
+              $('#category_name_update').val('');
+              $('#modal-update').modal('hide');
+              reloadPage(1500);
+    
+          },
+          // If fails
+          error:function(error){
+              if(error.responseJSON.category_name[0]) {
+                  $('#alert_category').removeClass('d-none');
+                  $('#alert_category').addClass('d-block');
+    
+                  $('#alert_category').html(error.responseJSON.category_name[0]);
+              }
+          }
+    
+      });
+      
+    });
+  
+  });
+
+}else{
+  $('#modal-create').remove();
+  $('#modal-update').remove();
+}
+
+
+function reloadPage(milisec){
+  setTimeout(() => {
+    window.location.reload();
+  }, milisec);
+}
