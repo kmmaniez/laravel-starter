@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
         // Route Post
         Route::resource('post', PostController::class)->only(['index','create','store','edit','update','destroy']);
         // Route Category
-        Route::resource('category', CategoryController::class)->only(['index','store','update','destroy']);
+        Route::resource('category', CategoryController::class)->only(['index','store','show','update','destroy']);
     });
 });
 
