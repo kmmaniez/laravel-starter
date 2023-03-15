@@ -4,7 +4,7 @@
     
     <div class="container-fluid">
         <!-- Page Heading -->
-        <h1 class="h3 mb-5 text-gray-800">{{ $title_page }} Page</h1>
+        <x-admin.page-heading>{{ $title_page }}</x-admin.page-heading>
 
         <!-- Content Row -->
 

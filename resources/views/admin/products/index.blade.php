@@ -5,7 +5,7 @@
     <div class="container-fluid">
     
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">{{ $title_page }} Page</h1>
+        <x-admin.page-heading>{{ $title_page }}</x-admin.page-heading>
 
         <!-- Card -->
         <div class="card shadow mb-4">
