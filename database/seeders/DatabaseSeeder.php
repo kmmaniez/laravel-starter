@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -60,6 +62,10 @@ class DatabaseSeeder extends Seeder
         $user->assignRole($role2);
         // \App\Models\User::factory(10)->create();
 
+        $list_categories = ['Technology','Bussiness','Sport','Travelling','Education','Health','Food','Animals','Politics'];
+        foreach ($list_categories as $key) {
+            Category::create(['name' => $key]);
+        }
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
