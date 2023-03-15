@@ -8,11 +8,19 @@
       opacity: 1;
       transform: translate3d(0, 0, 0);
     }
-  }
+}
   
 .alert-notif {
     opacity: 0;
     animation-name: fadeInDown;
     animation-delay: 200ms;
     animation-duration: 1800ms;
+}
+
+tbody#table td:first-child{
+  width: 150px;
+}
+
+tbody#table td:nth-child(3){
+  width: 400px;
 }
