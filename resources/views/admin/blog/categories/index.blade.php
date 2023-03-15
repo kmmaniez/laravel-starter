@@ -13,29 +13,25 @@
                 <h6 class="m-0 font-weight-bold text-primary">List {{ $title_page }}</h6>
             </div>
             <div class="card-body">
-                <a href="/products/create" class="btn btn-md btn-primary mb-4"><i class="fas fa-fw fa-user-plus"></i> Add {{ $title_page }}</a>  
+                <a href="javascript:void(0)" class="btn btn-md btn-primary mb-4" id="create-post"><i class="fas fa-fw fa-user-plus"></i> Add {{ $title_page }}</a>  
         
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Category</th>
+                                <th>Category Name</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="table-posts">
                             @forelse ($categories as $category)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
+                            <tr id="index_{{ $category->id }}">
+                                <td style="width: 150px">{{ $loop->iteration }}</td>
                                 <td>{{ $category->name }}</td>
-                                <td>
-                                    <form action="/products/{{ $category->id }}" method="post">
-                                        @csrf
-                                        @method('delete')
-                                        <a class="btn btn-sm btn-primary" href="{{ route('post.edit', $category) }}">Edit</a>
-                                        <a class="btn btn-sm btn-danger delete" id="{{ $category->id }}">Delete</a>
-                                    </form>
+                                <td style="width: 400px;">
+                                    <a href="javascript:void(0)" id="btn-edit-post" data-id="{{ $category->id }}" class="btn btn-primary btn-sm">EDIT</a>
+                                    <a href="javascript:void(0)" id="btn-delete-post" data-id="{{ $category->id }}" class="btn btn-danger btn-sm">DELETE</a>
                                 </td>
                             </tr>
                             @empty
