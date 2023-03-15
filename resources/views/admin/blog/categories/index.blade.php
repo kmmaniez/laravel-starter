@@ -5,12 +5,9 @@
     <div class="container-fluid">
     
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">{{ $title_page }} Page</h1>
-        
-        {{-- @if(auth()->user()->is_admin) --}}
-        {{-- @endif --}}
+        <x-admin.page-heading>{{ $title_page }}</x-admin.page-heading>
 
-        <!-- DataTales -->
+        <!-- Card -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">List {{ $title_page }}</h6>
@@ -23,8 +20,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Category Name</th>
-                                <th>URL Slug</th>
+                                <th>Category</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -33,7 +29,6 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $category->name }}</td>
-                                <td>{{ $category->slug }}</td>
                                 <td>
                                     <form action="/products/{{ $category->id }}" method="post">
                                         @csrf
