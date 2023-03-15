@@ -37,28 +37,52 @@ class CategoryController extends Controller
         // Return result response
         return response()->json([
             'success'   =>  true,
-            'message'   =>  'Data created successfully',
+            'message'   =>  'Data Created Successfully',
             'data'      =>  $category
         ]);
     }
 
     public function show(Category $category)
     {
-        //
-    }
-
-    public function edit(Category $category)
-    {
-        //
+        // Return response
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail Data Category',
+            'data'    => $category  
+        ]); 
     }
 
     public function update(Request $request, Category $category)
     {
-        //
+        // Make rules validation from request
+        $validator  =   Validator::make($request->all(),[
+            'category_name_update' => 'required'
+        ]);
+
+        // If validation fails
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        // Update category
+        $category->update([
+            'name' => $request->category_name_update
+        ]);
+
+        // Return result response
+        return response()->json([
+            'success'   =>  true,
+            'message'   =>  'Data Updated Successfully',
+            'data'      =>  $category
+        ]);
     }
 
     public function destroy(Category $category)
     {
-        //
+        Category::destroy($category->id);
+        return response()->json([
+            'success'   =>  true,
+            'message'   =>  'Data Deleted Successfully'
+        ]);
     }
 }
