@@ -19,7 +19,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Nomor</th>
+                                <th>Number</th>
                                 <th>Products Name</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
@@ -27,7 +27,7 @@
                             </tr>
                         </thead>
                         <tbody> 
-                        @foreach ($product as $data)<tr>
+                        @forelse ($product as $data)<tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $data->name }}</td>
                             <td>{{ $data->quantity }}</td>
@@ -40,7 +40,11 @@
                                 </form>
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                            <tr class="text-center">
+                                <td colspan="5"><i>There's no records, please create new record.</i></td>
+                            </tr>
+                        @endforelse
                         </tbody>
                     </table>
                 </div>
