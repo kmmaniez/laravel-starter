@@ -4,6 +4,10 @@ use App\Http\Controllers\Blog\CategoryController;
 use App\Http\Controllers\Blog\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Category;
+use App\Models\Post;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +24,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
 
     // Route Dashboard
-    Route::view('/', 'admin.dashboard')->name('dashboard');
+    Route::view('/', 'admin.dashboard',[
+        'categories_count'  => Category::all()->lazy()->count(),
+        'posts_count'       => Post::all()->count(),
+        'products_count'    => Product::all()->count(),
+        'users_count'       => User::all()->count(),
+    ])->name('dashboard');
 
     // Route Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.index');
