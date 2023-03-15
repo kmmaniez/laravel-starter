@@ -1,0 +1,1 @@
+<button class="btn btn-primary btn-md">{{ $slot }}</button>
