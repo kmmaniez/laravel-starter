@@ -22,9 +22,10 @@ php artisan serve
 3. [Yajra DataTables](https://yajrabox.com/docs/laravel-datatables/10.0)
 4. [DomPDF](https://github.com/barryvdh/laravel-dompdf)
 
-This project **has 2 features** CRUD for posts and products. 
-The main different is posts using **UUID** and products using **ID**, you'll know it later after read and test the app.
+This project **has 3 simple features**, that is CRUD for post,category and product. 
 
-Wanna add some features or depedencies? feels free to pull request :D
+The main different is product using **UUID**, category using **ID**, you'll know it later after read and test the app.
+
+Wanna add some features or depedencies? or integrate with front-end framework? feels free to pull request :D
 
 [Medium](https://) | [Dribbble](https://) | [Behance](https://) | [Instagram](https://)
