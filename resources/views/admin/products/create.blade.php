@@ -43,9 +43,9 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="price">Price</label>
-                                                <input type="text" class="form-control @error('price') is-invalid @enderror" value="{{ old('price') }}" name="price" id="price">
-                                                @error('price')
+                                                <label for="quantity">Quantity</label>
+                                                <input type="number" min="0" class="form-control @error('quantity') is-invalid @enderror" value="{{ old('quantity') }}" name="quantity" id="quantity">
+                                                @error('quantity')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
                                                     </div>
@@ -58,9 +58,9 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="quantity">Quantity</label>
-                                                <input type="number" min="0" class="form-control @error('quantity') is-invalid @enderror" value="{{ old('quantity') }}" name="quantity" id="quantity">
-                                                @error('quantity')
+                                                <label for="price">Price</label>
+                                                <input type="number" class="form-control @error('price') is-invalid @enderror" value="{{ old('price') }}" name="price" id="price">
+                                                @error('price')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
                                                     </div>

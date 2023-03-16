@@ -13,7 +13,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">List {{ $title_page }}</h6>
             </div>
             <div class="card-body">
-                <a href="javascript:void(0)" class="btn btn-md btn-primary mb-4" id="create-post"><i class="fas fa-fw fa-user-plus"></i> Add {{ $title_page }}</a>  
+                <a href="{{ route('products.create') }}" class="btn btn-md btn-primary mb-4" id="create-post"><i class="fas fa-fw fa-user-plus"></i> Add {{ $title_page }}</a>  
         
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -30,13 +30,14 @@
                         @forelse ($product as $data)<tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $data->name }}</td>
-                            <td>{{ $data->quantity }}</td>
-                            <td>{{ $data->price }}</td>
+                            <td>{{ $data->quantity }} Pcs</td>
+                            <td>${{ $data->price }} USD</td>
                             <td>
-                                <a class="btn btn-sm btn-primary" href="{{ route('products.edit', $data) }}">Edit</a>
-                                <form action="{{ route('products.store') }}/{{ $data->id }}" method="post">
+                                <form action="{{ route('products.destroy', $data->id) }}" method="post">
                                     @csrf 
-                                    @method('delete')<a class="btn btn-sm btn-danger delete" id="{{ $data->id }}">Delete</a>
+                                    <a class="btn btn-sm btn-primary" href="{{ route('products.edit', $data) }}">Edit</a>
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>
