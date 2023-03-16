@@ -174,10 +174,10 @@ if (window.location.pathname === '/blog/category') {
           // If fails
           error:function(error){
               if(error.responseJSON.category_name[0]) {
-                  $('#alert_category').removeClass('d-none');
-                  $('#alert_category').addClass('d-block');
+                  $('#alert_category_update').removeClass('d-none');
+                  $('#alert_category_update').addClass('d-block');
     
-                  $('#alert_category').html(error.responseJSON.category_name[0]);
+                  $('#alert_category_update').html(error.responseJSON.category_name[0]);
               }
           }
     
@@ -197,4 +197,28 @@ function reloadPage(milisec){
   setTimeout(() => {
     window.location.reload();
   }, milisec);
+}
+
+// Post section
+const titlePost = document.querySelector('#title');
+const slugPost  = document.querySelector('#slug');
+  
+titlePost.addEventListener('change', () => {
+  fetch('/blog/post/checkSlug?title=' + titlePost.value)
+      .then(response => response.json())
+      .then(data => slugPost.value = data.slug)
+      .catch(err => console.log(err))
+})
+
+function previewImage() {
+  const image         = document.querySelector('#thumbnail');
+  const imgPreview    = document.querySelector('.img-preview');
+  
+  imgPreview.style.display = 'block';
+
+  const oFReader = new FileReader();
+  oFReader.readAsDataURL(image.files[0]);
+  oFReader.onload = function (oFREvent) {
+      imgPreview.src = oFREvent.target.result;
+  }
 }
