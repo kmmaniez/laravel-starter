@@ -11,13 +11,6 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-
-    // public function index(): View
-    // {
-    //     return view('profile.index', [
-    //         'title_page'    => 'Data Products'
-    //     ]);
-    // }
     
      public function edit(Request $request): View
     {
