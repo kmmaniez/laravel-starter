@@ -5,114 +5,61 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Alert;
+use App\Http\Requests\StoreProductRequest;
+use Spatie\Permission\Models\Role;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
         return view('admin.products.index', [
             'title_page'    => 'Data Products',
             'product'       => Product::all()
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
-        // if (!auth()->user()->is_admin) {
-        //     return redirect('/dashboard');
-        // }
-        $warna = ['Hijau','Merah','Hitam','Biru','Putih','Coklat','Abu'];
-        $ukuran = [];
-        for ($i=2; $i <= 35; $i++) { 
-            array_push($ukuran, $i);
-        }
         return view('admin.products.create',[
-            'title_page'    => 'Add Product',
-            'products'      => ['id' => 1, 'name' => 'okok'],
-            'listwarna'     => $warna,
-            'listukuran'    => $ukuran
+            'title_page'    => 'Create Product',
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        $rules = [
-            'name' => 'required',
-            'price' => 'required',
-            'quantity' => 'required'
-        ];
-        $validated = $request->validate($rules);
-    
+        // Retrieve validated data from rules in StoreProductReq
+        $validated = $request->validated();
+        
         Product::create($validated);
-        Alert::success('Success', 'Data berhasil ditambah!');
+        Alert::success('Success', 'Data Created Successfully!');
 
         return redirect('/products');
-
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Product $product)
     {
-        //
         return view('admin.products.edit', [
             'title_page'    => 'Edit Product',
             'product'       => $product,
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
+    public function update(StoreProductRequest $request, Product $product)
     {
-        //
-        $validated = $request->validate([
-            'nama_produk'   => 'required|string|max:15',
-            'warna'         => 'required',
-            'ukuran'        => 'required',
-            'stok'          => 'required',
-        ]);
+        $validated = $request->validated();
+        
         Product::where('id', $product->id)->update($validated);
+        Alert::success('Success', 'Data Updated Successfully!');
+
         return redirect(route('products.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Product $product)
     {
         Product::destroy($product->id);
-        Alert::success('Success', 'Data berhasil dihapus!');
+        Alert::success('Success', 'Data Deleted Successfully!');
+
         return redirect(route('products.index'));
     }
 }
