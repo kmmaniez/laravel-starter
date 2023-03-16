@@ -66,7 +66,7 @@ deleteButton.forEach(btn => {
       })
 })
 
-// Prevent loop modal in other URL
+// Show modal only in specific URL
 if (window.location.pathname === '/blog/category') {
 
   // Open modal create
