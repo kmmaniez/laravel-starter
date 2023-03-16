@@ -1,1 +1,1 @@
-<button class="btn btn-primary btn-md">{{ $slot }}</button>
+<button class="btn btn-primary btn-md" id={{ $id }}>{{ $slot }}</button>

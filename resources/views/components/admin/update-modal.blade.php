@@ -12,7 +12,7 @@
                         <div class="form-group">
                             <label for="category_name_update" class="control-label">Category Name</label>
                             <input type="text" class="form-control" id="category_name_update" name="category_name_update" required autofocus>
-                            <div class="alert alert-danger mt-2 d-none" role="alert" id="alert_category"></div>
+                            <div class="alert alert-danger mt-2 d-none" role="alert" id="alert_category_update"></div>
                         </div>
                     </div>
                     <div class="modal-footer">
