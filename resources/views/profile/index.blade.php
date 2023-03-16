@@ -49,11 +49,6 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="address">Address</label>
-                                    <textarea type="text" name="address" id="address" class="form-control" rows="3"></textarea>
-                                </div>
-                                
-                                <div class="form-group">
                                     <label for="photo" class="form-label">Photo</label>
                                     <input type="file" name="photo" id="photo" class="form-control">
                                 </div>
