@@ -32,10 +32,10 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'category'   => 'required',
+            'category'      => 'required',
             'title'         => 'required|max:255',
             'slug'          => 'required|unique:posts',
-            'thumbnail'         => 'image|file|max:1024',
+            'thumbnail'     => 'image|file|max:1024',
             'content'       => 'required'
         ]);
         
@@ -44,12 +44,13 @@ class PostController extends Controller
         }
 
         // $validatedData['user_id'] = auth()->user()->id;
+        $validatedData['category_id'] = $request->category;
         // $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);
 
         Post::create($validatedData);
         Alert::success('Success', 'Data Created Successfully!');
 
-        return redirect(route('post.index'))->with('success', 'has been added new posts');
+        return redirect(route('post.index'));
 
     }
 
@@ -70,12 +71,17 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        //
+        // dd($post);
+        Post::destroy($post->id);
+        Alert::success('Success', 'Data Deleted Successfully!');
+
+        return redirect(route('post.index'));
     }
 
     public function checkSlug(Request $request)
     {
-        $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
+        $slug = SlugService::createSlug(Post::class, 'slug', $request->slug);
+
         return response()->json(['slug' => $slug]);
     }
 }
