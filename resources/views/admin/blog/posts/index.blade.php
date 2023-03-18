@@ -20,9 +20,11 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Products Name</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
+                                <th>Title</th>
+                                <th>Slug</th>
+                                <th>Category</th>
+                                <th>Thumbnail</th>
+                                <th>Author</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -30,21 +32,25 @@
                             @forelse ($posts as $post)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $post->name }}</td>
-                                <td>{{ $post->quantity }}</td>
-                                <td>{{ $post->price }}</td>
+                                <td>{{ $post->title }}</td>
+                                <td><span class="badge badge-primary px-2 py-2">{{ $post->slug }}</span></td>
+                                <td>{{ $post->category->name }}</td>
+                                <td><img src="{{ asset('post-images/' . $post->image) }}" class="img-fluid w-50" alt=""></td>
+                                <td>{{ $post->author }}</td>
                                 <td>
-                                    <form action="/products/{{ $post->id }}" method="post">
-                                        @csrf
-                                        @method('delete')
+                                    <form action="/blog/post/{{ $post->slug }}" method="post">
+                                        <a class="btn btn-sm btn-success" href="#">Print PDF</a>
+                                        <a class="btn btn-sm btn-secondary" href="{{ route('post.show', $post) }}">Detail</a>
                                         <a class="btn btn-sm btn-primary" href="{{ route('post.edit', $post) }}">Edit</a>
-                                        <a class="btn btn-sm btn-danger delete" id="{{ $post->id }}">Delete</a>
+                                        @method('delete')
+                                        @csrf
+                                        <button class="btn btn-sm btn-danger">Delete</button>
                                     </form>
                                 </td>
                             </tr>
                             @empty
                             <tr class="text-center">
-                                <td colspan="5"><i>There's no records, please create new record.</i></td>
+                                <td colspan="6"><i>There's no records, please create new record.</i></td>
                             </tr>
                             @endforelse
                         </tbody>
