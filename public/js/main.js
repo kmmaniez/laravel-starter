@@ -202,13 +202,16 @@ function reloadPage(milisec){
 // Post section
 const titlePost = document.querySelector('#title');
 const slugPost  = document.querySelector('#slug');
+if (window.location.pathname === '/blog/post/create') {
   
-titlePost.addEventListener('change', () => {
-  fetch('/blog/post/checkSlug?title=' + titlePost.value)
-      .then(response => response.json())
-      .then(data => slugPost.value = data.slug)
-      .catch(err => console.log(err))
-})
+  titlePost.addEventListener('change', () => {
+    fetch('/blog/checkSlug?slug=' + titlePost.value)
+        .then(response => response.json())
+        .then(data => slugPost.value = data.slug)
+        .catch(error => console.error(error))
+  })
+  
+}
 
 function previewImage() {
   const image         = document.querySelector('#thumbnail');
