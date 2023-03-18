@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth')->group(function () {
+    
     // Route Dashboard
     Route::view('/', 'admin.dashboard',[
         'categories_count'  => Category::all()->lazy()->count(),
@@ -43,14 +44,17 @@ Route::middleware('auth')->group(function () {
 
         // Default Route Blog prefix
         Route::get('/', fn() => redirect()->route('dashboard'));
+        
         // Route Post
         Route::resource('post', PostController::class)->only(['index','create','store','show','edit','update','destroy']);
+        
         // Route Category
         Route::resource('category', CategoryController::class)->only(['index','store','show','update','destroy']);
+        
+        // Route checkSlug
+        Route::get('checkSlug', [PostController::class, 'checkSlug']);
     });
 });
-Route::get('/blog/post/checkSlug', [PostController::class, 'checkSlug']);
-
 
 
 
