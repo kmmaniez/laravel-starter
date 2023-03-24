@@ -66,6 +66,9 @@ class DatabaseSeeder extends Seeder
         foreach ($list_categories as $key) {
             Category::create(['name' => $key]);
         }
+        
+        ProductSeeder::class;
+        // \App\Models\Product::factory(1000)->create();
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
