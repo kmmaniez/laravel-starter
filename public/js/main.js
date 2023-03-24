@@ -225,3 +225,24 @@ function previewImage() {
       imgPreview.src = oFREvent.target.result;
   }
 }
+
+$(document).ready(function () {
+   $('#productDataTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '/products',
+        columns: [
+          // data :  name: 'x' from DB
+            { data: 'DT_RowIndex', name: 'id' },
+            { data: 'name', name: 'name' },
+            { data: 'quantity', name: 'quantity' },
+            { data: 'price', name: 'price' },
+            {
+              data: 'action', 
+              name: 'action', 
+              orderable: true, 
+              searchable: true
+          },
+        ]
+    })
+});
