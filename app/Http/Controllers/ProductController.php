@@ -19,28 +19,13 @@ class ProductController extends Controller
             return DataTables::eloquent($users)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-                        $actionBtn = '<a href="#" id="edit-post" class="btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                        $actionBtn = '<a href="/products/'.$row->id.'" id="edit-post" class="btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
                         return $actionBtn;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
         }
         return view('admin.products.index', ['title_page'    => 'Data Products']);
-    }
-    public function indexs(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = User::select('id','name','email')->get();
-            return DataTables::of($data)->addIndexColumn()
-                ->addColumn('action', function($row){
-                    $btn = '<a href="javascript:void(0)" class="btn btn-primary btn-sm">View</a>';
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
-        return view('users');
     }
 
     public function create()
@@ -53,10 +38,19 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         // Retrieve validated data from rules in StoreProductReq
-        $validated = $request->validated();
-        
-        Product::create($validated);
-        Alert::success('Success', 'Data Created Successfully!');
+        $validated  = $request->validated();
+
+        if (!$validated) {
+            return response()->json($validated->errors(), 422);
+        }
+
+        $product    = Product::create($validated);
+
+        return response()->json([
+            'success'   =>  true,
+            'message'   =>  'Data Created Successfully',
+            'data'      =>  $product
+        ]);
 
         return redirect('/products');
     }
