@@ -66,8 +66,7 @@ deleteButton.forEach(btn => {
       })
 })
 
-// Show modal only in specific URL
-if (window.location.pathname === '/blog/category') {
+/* START MODAL CATEGORY */
 
   // Open modal create
   $('body').on('click', '#create-post', function () {
@@ -187,10 +186,7 @@ if (window.location.pathname === '/blog/category') {
   
   });
 
-}else{
-  $('#modal-create').remove();
-  $('#modal-update').remove();
-}
+/* END MODAL CATEGORY */
 
 
 function reloadPage(milisec){
@@ -232,7 +228,6 @@ $(document).ready(function () {
         serverSide: true,
         ajax: '/products',
         columns: [
-          // data :  name: 'x' from DB
             { data: 'DT_RowIndex', name: 'id' },
             { data: 'name', name: 'name' },
             { data: 'quantity', name: 'quantity' },
@@ -243,6 +238,9 @@ $(document).ready(function () {
               orderable: true, 
               searchable: true
           },
-        ]
+        ],
+        "language": {
+            "processing": "<div class=\"spinner-border bg-transparent\" role=\"status\"></div>"
+        }
     })
 });
