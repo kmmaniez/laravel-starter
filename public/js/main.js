@@ -68,132 +68,125 @@ deleteButton.forEach(btn => {
 
 /* START MODAL CATEGORY */
 
-  // Open modal create
-  $('body').on('click', '#create-post', function () {
-    $('#modal-create').modal('show');
-  
-    // Save from modal
-    $('#save').click(function(e) {
-      e.preventDefault();
-  
-      // Define variable & get value
-      let categoryName    = $('#category_name').val();
-  
-      $.ajax({
-          url: window.location.pathname,
-          type: "POST",
-          cache: false,
-          data: {
-              "category_name": categoryName,
-              "_token": token
-          },
-          // If success
-          success:function(response){
-              Swal.fire({
-                  type: 'success',
-                  icon: 'success',
-                  title: `${response.message}`,
-                  showConfirmButton: false,
-                  timer: 3000
-              });
-  
-              // Clear form
-              $('#category_name').val('');
-              // Close modal
-              $('#modal-create').modal('hide');
-              // Refresh page
-              setTimeout(() => {
-                window.location.reload();
-              }, 1500);
-  
-          },
-          // If fails
-          error:function(error){
-              if(error.responseJSON.category_name[0]) {
-                  // Show alert
-                  $('#alert_category').removeClass('d-none');
-                  $('#alert_category').addClass('d-block');
-  
-                  // Add message to alert
-                  $('#alert_category').html(error.responseJSON.category_name[0]);
-              }
-          }
-  
-      });
-      
-    });
-  
-  });
-  
-  // Open modal edit
-  $('body').on('click', '#edit-post', function () {
-    let categoryId    = $(this).data('id');
-    let url           = window.location.pathname + '/' + categoryId;
-  
-    // Get data
+// Open modal create
+$('body').on('click', '#create-post', function () {
+  $('#modal-create').modal('show');
+
+  // Save from modal
+  $('#save').click(function(e) {
+    e.preventDefault();
+
+    // Define variable & get value
+    let categoryName    = $('#category_name').val();
+
     $.ajax({
-      url: url,
-      type: "GET",
-      cache: false,
-      success:function(response){
-        $('#category_name_update').val(response.data.name);
-        $('#modal-update').modal('show');
-      }
+        url: window.location.pathname,
+        type: "POST",
+        cache: false,
+        data: {
+            "category_name": categoryName,
+            "_token": token
+        },
+        // If success
+        success:function(response){
+            Swal.fire({
+                type: 'success',
+                icon: 'success',
+                title: `${response.message}`,
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            // Clear form
+            $('#category_name').val('');
+            // Close modal
+            $('#modal-create').modal('hide');
+            // Refresh page
+            setTimeout(() => {
+              window.location.reload();
+            }, 1500);
+
+        },
+        // If fails
+        error:function(error){
+            if(error.responseJSON.category_name[0]) {
+                // Show alert
+                $('#alert_category').removeClass('d-none');
+                $('#alert_category').addClass('d-block');
+
+                // Add message to alert
+                $('#alert_category').html(error.responseJSON.category_name[0]);
+            }
+        }
+
     });
-   
-    // Process update
-    $('#update').click(function(e) {
-      e.preventDefault();
-  
-      let categoryName    = $('#category_name_update').val();
-  
-      $.ajax({
-          url: url,
-          type: "PUT",
-          cache: false,
-          data: {
-              "id": categoryId,
-              "category_name_update": categoryName,
-              "_token": token
-          },
-          // If success
-          success:function(response){
-              Swal.fire({
-                  type: 'success',
-                  icon: 'success',
-                  title: `${response.message}`,
-                  showConfirmButton: false,
-              });
-              
-              $('#category_name_update').val('');
-              $('#modal-update').modal('hide');
-              reloadPage(1500);
     
-          },
-          // If fails
-          error:function(error){
-              if(error.responseJSON.category_name[0]) {
-                  $('#alert_category_update').removeClass('d-none');
-                  $('#alert_category_update').addClass('d-block');
-    
-                  $('#alert_category_update').html(error.responseJSON.category_name[0]);
-              }
-          }
-    
-      });
-      
-    });
-  
   });
+
+});
+
+// Open modal edit
+$('body').on('click', '#edit-post', function () {
+  let categoryId    = $(this).data('id');
+  let url           = window.location.pathname + '/' + categoryId;
+
+  // Get data
+  $.ajax({
+    url: url,
+    type: "GET",
+    cache: false,
+    success:function(response){
+      $('#category_name_update').val(response.data.name);
+      $('#modal-update').modal('show');
+    }
+  });
+  
+  // Process update
+  $('#update').click(function(e) {
+    e.preventDefault();
+
+    let categoryName    = $('#category_name_update').val();
+
+    $.ajax({
+        url: url,
+        type: "PUT",
+        cache: false,
+        data: {
+            "id": categoryId,
+            "category_name_update": categoryName,
+            "_token": token
+        },
+        // If success
+        success:function(response){
+            Swal.fire({
+                type: 'success',
+                icon: 'success',
+                title: `${response.message}`,
+                showConfirmButton: false,
+            });
+            
+            $('#category_name_update').val('');
+            $('#modal-update').modal('hide');
+            reloadPage(1500);
+  
+        },
+        // If fails
+        error:function(error){
+            if(error.responseJSON.category_name[0]) {
+                $('#alert_category_update').removeClass('d-none');
+                $('#alert_category_update').addClass('d-block');
+  
+                $('#alert_category_update').html(error.responseJSON.category_name[0]);
+            }
+        }
+  
+    });
+    
+  });
+
+});
 
 /* END MODAL CATEGORY */
-
-
-function reloadPage(milisec){
-  setTimeout(() => {
-    window.location.reload();
-  }, milisec);
-}
 
 // Post section
 const titlePost = document.querySelector('#title');
@@ -209,6 +202,35 @@ if (window.location.pathname === '/blog/post/create') {
   
 }
 
+
+/* Product DataTable */
+$(document).ready(function () {
+  $('#productDataTable').DataTable({
+       processing: true,
+       serverSide: true,
+       ajax: '/products',
+       columns: [
+           { data: 'DT_RowIndex', name: 'id' },
+           { data: 'name', name: 'name' },
+           { data: 'quantity', name: 'quantity' },
+           { data: 'price', name: 'price' },
+           {
+             data: 'action', 
+             name: 'action', 
+             orderable: true, 
+             searchable: true
+         },
+       ],
+       "language": {
+           "processing": "<div class=\"spinner-border bg-transparent\" role=\"status\"></div>"
+       }
+   })
+});
+
+
+// ---------- FUNCTION ---------- // 
+
+/* Preview image */
 function previewImage() {
   const image         = document.querySelector('#thumbnail');
   const imgPreview    = document.querySelector('.img-preview');
@@ -222,25 +244,9 @@ function previewImage() {
   }
 }
 
-$(document).ready(function () {
-   $('#productDataTable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: '/products',
-        columns: [
-            { data: 'DT_RowIndex', name: 'id' },
-            { data: 'name', name: 'name' },
-            { data: 'quantity', name: 'quantity' },
-            { data: 'price', name: 'price' },
-            {
-              data: 'action', 
-              name: 'action', 
-              orderable: true, 
-              searchable: true
-          },
-        ],
-        "language": {
-            "processing": "<div class=\"spinner-border bg-transparent\" role=\"status\"></div>"
-        }
-    })
-});
+/* Reload/refresh page */
+function reloadPage(milisec){
+  setTimeout(() => {
+    window.location.reload();
+  }, milisec);
+}
