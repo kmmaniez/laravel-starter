@@ -47,6 +47,6 @@
         
     </div>
 
-    @include('components.admin.category-create-modal')
-    @include('components.admin.category-update-modal')
+    @include('components.admin.category.create-modal')
+    @include('components.admin.category.update-modal')
 @endsection
