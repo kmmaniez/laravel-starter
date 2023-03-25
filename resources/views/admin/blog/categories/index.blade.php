@@ -16,7 +16,7 @@
                 <a href="javascript:void(0)" class="btn btn-md btn-primary mb-4" id="create-post"><i class="fas fa-fw fa-user-plus"></i> Add {{ $title_page }}</a>  
         
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="categoriesTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -47,4 +47,6 @@
         
     </div>
 
+    @include('components.admin.category-create-modal')
+    @include('components.admin.category-update-modal')
 @endsection
