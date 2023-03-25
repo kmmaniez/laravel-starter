@@ -53,12 +53,10 @@
             </div>
             <!-- End of Main Content -->
 
-            {{-- <x-footer></x-footer> --}}
+            <x-admin.footer></x-admin.footer>
 
         </div>
         <!-- End of Content Wrapper -->
-        @include('components.admin.create-modal')
-        @include('components.admin.update-modal')
         
     </div>
     <!-- End of Page Wrapper -->
