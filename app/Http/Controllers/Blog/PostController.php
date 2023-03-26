@@ -42,7 +42,6 @@ class PostController extends Controller
         if ($request->file('thumbnail')) {
             $validatedData['image'] = $request->file('thumbnail')->store('post-images');
         }
-
         // $validatedData['user_id'] = auth()->user()->id;
         $validatedData['category_id'] = $request->category;
         // $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);
