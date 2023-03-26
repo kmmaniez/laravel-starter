@@ -19,7 +19,7 @@ class ProductController extends Controller
             return DataTables::eloquent($users)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-                        $actionBtn = '<a href="/products/'.$row->id.'" id="edit-post" class="btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                        $actionBtn = '<a href="/products/'.$row->id.'" id="edit-post" class="btn btn-success btn-sm">Edit</a> <a href="#" data-id="'.$row->id.'" id="deleteProduct" class="btn btn-danger btn-sm">Delete</a>';
                         return $actionBtn;
                     })
                     ->rawColumns(['action'])
