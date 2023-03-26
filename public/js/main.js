@@ -1,14 +1,33 @@
 // Get token from your app
-let token             = document.getElementsByTagName('meta')[5].getAttribute('content');
+let token                 = document.getElementsByTagName('meta')[5].getAttribute('content');
 
 // Profile section
-const newPassword     = document.querySelector('#password');
-const confPassword    = document.querySelector('#password_confirmation');
-const btnUpdatePass   = document.querySelector('#update_pass');
+const newPassword         = document.querySelector('#password');
+const confPassword        = document.querySelector('#password_confirmation');
+const btnUpdatePass       = document.querySelector('#update_pass');
 
 // Category section
-const btnCreatePost   = document.querySelector('#create-post');
-const deleteButton    = document.querySelectorAll('#delete-post');
+const btnCreatePost       = document.querySelector('#create-post');
+const deleteCategoryBtn   = document.querySelectorAll('#delete-post');
+
+// Product section
+const deleteProductBtn    = document.querySelectorAll('#deleteProduct');
+const quantity            = document.querySelector('#quantity');
+
+// Post section
+const titlePost           = document.querySelector('#title');
+const slugPost            = document.querySelector('#slug');
+
+if (window.location.pathname === '/products') {
+  quantity.addEventListener('keyup', () => {
+    if (quantity.value === '') {
+      $('#quantity').addClass('is-invalid')
+      $('#invalidQuantity').text(`Value must be a number`)
+    }else{
+      quantity.classList.remove('is-invalid');
+    }
+  })
+}
 
 // Default disable button update password
 if (window.location.pathname === '/profile') {
@@ -28,7 +47,7 @@ if (window.location.pathname === '/profile') {
   })
 }
 // Event delete button category
-deleteButton.forEach(btn => {
+deleteCategoryBtn.forEach(btn => {
   btn.addEventListener('click', (e) => {
     e.preventDefault();
     let categoryId  = btn.getAttribute('data-id');
@@ -62,7 +81,7 @@ deleteButton.forEach(btn => {
               }
             });
             }
-        })
+    })
       })
 })
 
@@ -183,8 +202,6 @@ $('body').on('click', '#edit-post', function () {
 /* END MODAL CATEGORY */
 
 // Post section
-const titlePost = document.querySelector('#title');
-const slugPost  = document.querySelector('#slug');
 if (window.location.pathname === '/blog/post/create') {
   
   titlePost.addEventListener('change', () => {
@@ -263,7 +280,7 @@ $('body').on('click', '#create-product', function () {
 
         },
         error:function(error){
-          
+          console.log(error.responseJSON);
           if(error.responseJSON.errors.hasOwnProperty('name')) {
             $('#name').addClass('is-invalid')
             $('#invalidName').text(`${error.responseJSON.errors.name[0]}`)
