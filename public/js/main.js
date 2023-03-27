@@ -12,22 +12,11 @@ const deleteCategoryBtn   = document.querySelectorAll('#delete-post');
 
 // Product section
 const deleteProductBtn    = document.querySelectorAll('#deleteProduct');
-const quantity            = document.querySelector('#quantity');
+// const quantity            = document.querySelector('#quantity');
 
 // Post section
 const titlePost           = document.querySelector('#title');
 const slugPost            = document.querySelector('#slug');
-
-if (window.location.pathname === '/products') {
-  quantity.addEventListener('keyup', () => {
-    if (quantity.value === '') {
-      $('#quantity').addClass('is-invalid')
-      $('#invalidQuantity').text(`Value must be a number`)
-    }else{
-      quantity.classList.remove('is-invalid');
-    }
-  })
-}
 
 // Default disable button update password
 if (window.location.pathname === '/profile') {
@@ -46,48 +35,11 @@ if (window.location.pathname === '/profile') {
     }, 1800);
   })
 }
-// Event delete button category
-deleteCategoryBtn.forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    let categoryId  = btn.getAttribute('data-id');
 
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "Do you want to delete this data ?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            $.ajax({
-              url: window.location.pathname + '/' + categoryId,
-              type: "DELETE",
-              cache: false,
-              data: {
-                  "_token": token
-              },
-              success:function(response){ 
-                  Swal.fire({
-                      type: 'success',
-                      icon: 'success',
-                      title: `${response.message}`,
-                      showConfirmButton: false
-                  });
-                  reloadPage(1000);
-              }
-            });
-            }
-    })
-      })
-})
 
-/* START MODAL CATEGORY */
+/* SECTION CATEGORY*/
 
-// Open modal create
+// modal create
 $('body').on('click', '#create-post', function () {
   $('#modal-create').modal('show');
 
@@ -113,7 +65,7 @@ $('body').on('click', '#create-post', function () {
                 icon: 'success',
                 title: `${response.message}`,
                 showConfirmButton: false,
-                timer: 2000
+                // timer: 2000
             });
 
             // Clear form
@@ -138,7 +90,7 @@ $('body').on('click', '#create-post', function () {
   });
 });
 
-// Open modal edit
+// modal edit
 $('body').on('click', '#edit-post', function () {
   let categoryId    = $(this).data('id');
   let url           = window.location.pathname + '/' + categoryId;
@@ -199,9 +151,48 @@ $('body').on('click', '#edit-post', function () {
 
 });
 
-/* END MODAL CATEGORY */
+// Event delete button category
+deleteCategoryBtn.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    let categoryId  = btn.getAttribute('data-id');
 
-// Post section
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you want to delete this data ?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: window.location.pathname + '/' + categoryId,
+              type: "DELETE",
+              cache: false,
+              data: {
+                  "_token": token
+              },
+              success:function(response){ 
+                  Swal.fire({
+                      type: 'success',
+                      icon: 'success',
+                      title: `${response.message}`,
+                      showConfirmButton: false
+                  });
+                  reloadPage(1000);
+              }
+            });
+            }
+    })
+      })
+})
+
+
+
+/* SECTION POST */
 if (window.location.pathname === '/blog/post/create') {
   
   titlePost.addEventListener('change', () => {
@@ -214,7 +205,124 @@ if (window.location.pathname === '/blog/post/create') {
 }
 
 
-/* Product DataTable */
+
+/* SECTION PRODUCT */
+
+// validation modal
+if (window.location.pathname === '/products') {
+  quantity.addEventListener('keyup', () => {
+    if (quantity.value === '') {
+      $('#quantity').addClass('is-invalid')
+      $('#invalidQuantity').text(`Value must be a number`)
+    }else{
+      quantity.classList.remove('is-invalid');
+    }
+  })
+}
+
+// modal create
+$('body').on('click', '#create-product', function () {
+  $('#modal-create').modal('show');
+
+  // Save from modal
+  $('#saveProduct').click(function (e){
+    e.preventDefault()
+    const productName     = $('#name').val();
+    const productQuantity = $('#quantity').val();
+    const productPrice    = $('#price').val();
+
+    $.ajax({
+        url: window.location.pathname,
+        type: "POST",
+        cache: false,
+        data: {
+          "_token": token,
+          "name": productName,
+          "quantity": productQuantity,
+          "price": productPrice
+        },
+        success:function(response){
+          // console.log(response);
+          // console.log(this);
+          // console.log(e);
+            Swal.fire({
+                icon: 'success',
+                title: `${response.message}`,
+                showConfirmButton: false,
+                timer: 2000
+            });
+            
+            // Clear form
+            $('#name').val('');
+            $('#quantity').val('');
+            $('#price').val('');
+            // Close modal
+            $('#modal-create').modal('hide');
+            // $(this).unbind();
+            setTimeout(() => {
+              window.location.reload()
+            }, 2100);
+            
+        },
+        error:function(error){
+          console.log(error.responseJSON);
+          if(error.responseJSON.errors.hasOwnProperty('name')) {
+            $('#name').addClass('is-invalid')
+            $('#invalidName').text(`${error.responseJSON.errors.name[0]}`)
+          }
+
+          if(error.responseJSON.errors.hasOwnProperty('quantity')) {
+            $('#quantity').addClass('is-invalid')
+            $('#invalidQuantity').text(`${error.responseJSON.errors.quantity[0]}`)
+          }
+          
+          if(error.responseJSON.errors.hasOwnProperty('price')) {
+            $('#price').addClass('is-invalid')
+            $('#invalidPrice').text(`${error.responseJSON.errors.price[0]}`)
+          }
+        }
+
+    });
+  })
+});
+
+// modal delete
+$('body').on('click', '#deleteProduct', function(){
+  let productId = $(this).data('id');
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "Do you want to delete this data ?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: window.location.pathname + '/' + productId,
+          type: "DELETE",
+          cache: false,
+          data: {
+              "_token": token
+          },
+          success:function(response){ 
+              Swal.fire({
+                  type: 'success',
+                  icon: 'success',
+                  title: `${response.message}`,
+                  showConfirmButton: false,
+                  timer: 1000,
+              });
+              $('#productDataTable').DataTable().ajax.reload();
+          }
+        });
+        }
+})
+})
+
+// datatable product
 $(document).ready(function () {
   $('#productDataTable').DataTable({
        processing: true,
@@ -238,68 +346,7 @@ $(document).ready(function () {
    })
 });
 
-/* START MODAL PRODUCT */
 
-// Open modal create
-$('body').on('click', '#create-product', function () {
-  $('#modal-create').modal('show');
-
-  // Save from modal
-  $('#saveProduct').click(function (e){
-    e.preventDefault()
-    const productName     = $('#name').val();
-    const productQuantity = $('#quantity').val();
-    const productPrice    = $('#price').val();
-
-    $.ajax({
-        url: window.location.pathname,
-        type: "POST",
-        cache: false,
-        data: {
-          "_token": token,
-          "name": productName,
-          "quantity": productQuantity,
-          "price": productPrice
-        },
-        success:function(response){
-          console.log(response);
-            Swal.fire({
-                icon: 'success',
-                title: `${response.message}`,
-                showConfirmButton: false,
-                timer: 2000
-            });
-
-            // Clear form
-            $('#name').val('');
-            $('#quantity').val('');
-            $('#price').val('');
-
-            // Close modal
-            $('#modal-create').modal('hide');
-
-        },
-        error:function(error){
-          console.log(error.responseJSON);
-          if(error.responseJSON.errors.hasOwnProperty('name')) {
-            $('#name').addClass('is-invalid')
-            $('#invalidName').text(`${error.responseJSON.errors.name[0]}`)
-          }
-
-          if(error.responseJSON.errors.hasOwnProperty('quantity')) {
-            $('#quantity').addClass('is-invalid')
-            $('#invalidQuantity').text(`${error.responseJSON.errors.quantity[0]}`)
-          }
-          
-          if(error.responseJSON.errors.hasOwnProperty('price')) {
-            $('#price').addClass('is-invalid')
-            $('#invalidPrice').text(`${error.responseJSON.errors.price[0]}`)
-          }
-        }
-
-    });
-  })
-});
 
 // ---------- FUNCTION ---------- // 
 
