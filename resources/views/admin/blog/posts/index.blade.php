@@ -50,7 +50,7 @@
                             </tr>
                             @empty
                             <tr class="text-center">
-                                <td colspan="6"><i>There's no records, please create new record.</i></td>
+                                <td colspan="7"><i>There's no records, please create new record.</i></td>
                             </tr>
                             @endforelse
                         </tbody>
