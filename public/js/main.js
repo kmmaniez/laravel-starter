@@ -242,9 +242,6 @@ $('body').on('click', '#create-product', function () {
           "price": productPrice
         },
         success:function(response){
-          // console.log(response);
-          // console.log(this);
-          // console.log(e);
             Swal.fire({
                 icon: 'success',
                 title: `${response.message}`,
@@ -258,7 +255,7 @@ $('body').on('click', '#create-product', function () {
             $('#price').val('');
             // Close modal
             $('#modal-create').modal('hide');
-            // $(this).unbind();
+            
             setTimeout(() => {
               window.location.reload()
             }, 2100);
