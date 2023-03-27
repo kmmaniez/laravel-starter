@@ -51,8 +51,6 @@ class ProductController extends Controller
             'message'   =>  'Data Created Successfully',
             'data'      =>  $product
         ]);
-
-        return redirect('/products');
     }
 
     public function edit(Product $product)
@@ -76,8 +74,11 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         Product::destroy($product->id);
-        Alert::success('Success', 'Data Deleted Successfully!');
 
+        return response()->json([
+            'success'   =>  true,
+            'message'   =>  'Data Deleted Successfully'
+        ]);
         return redirect(route('products.index'));
     }
 }
