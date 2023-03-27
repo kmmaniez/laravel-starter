@@ -35,7 +35,7 @@
                                 <td>{{ $post->title }}</td>
                                 <td><span class="badge badge-primary px-2 py-2">{{ $post->slug }}</span></td>
                                 <td>{{ $post->category->name }}</td>
-                                <td><img src="{{ asset('post-images/' . $post->image) }}" class="img-fluid w-50" alt=""></td>
+                                <td style="width: 200px"><img src="{{ asset('storage/post-image/' . $post->image) }}" class="img-fluid" alt=""></td>
                                 <td>{{ $post->author }}</td>
                                 <td>
                                     <form action="/blog/post/{{ $post->slug }}" method="post">
