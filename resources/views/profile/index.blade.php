@@ -14,7 +14,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Photo Profile</h6>
                     </div>
                     <div class="card-body">
-                        <img src="{{ asset('sb-admin/img/user_profile.jpg') }}" class="img-fluid img-thumbnail" alt="Photo profile">
+                        <img src="{{ asset('storage/user/image/'.$user->image) }}" class="img-fluid img-thumbnail" alt="Photo profile">
                     </div>
                 </div>
     
@@ -49,8 +49,8 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="photo" class="form-label">Photo</label>
-                                    <input type="file" name="photo" id="photo" class="form-control">
+                                    <label for="image" class="form-label">Photo</label>
+                                    <input type="file" name="image" id="image" class="form-control">
                                 </div>
 
                                 <button class="btn btn-md btn-primary">Update profile</button>
