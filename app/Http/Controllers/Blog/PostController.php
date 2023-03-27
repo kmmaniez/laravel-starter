@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Alert;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -40,17 +41,17 @@ class PostController extends Controller
         ]);
         
         if ($request->file('thumbnail')) {
-            $validatedData['image'] = $request->file('thumbnail')->store('post-images');
+            $imageName = $request->file('thumbnail');
+            $validatedData['image'] = $imageName->hashName();
+            $request->file('thumbnail')->storeAs('public/post-image', $imageName->hashName());
         }
-        // $validatedData['user_id'] = auth()->user()->id;
+
         $validatedData['category_id'] = $request->category;
-        // $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);
 
         Post::create($validatedData);
         Alert::success('Success', 'Data Created Successfully!');
 
         return redirect(route('post.index'));
-
     }
 
     public function show(Post $post)
@@ -70,7 +71,8 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        // dd($post);
+        Storage::delete('public/post-image/'.$post->image);
+
         Post::destroy($post->id);
         Alert::success('Success', 'Data Deleted Successfully!');
 
