@@ -36,14 +36,14 @@ class PostController extends Controller
             'category'      => 'required',
             'title'         => 'required|max:255',
             'slug'          => 'required|unique:posts',
-            'thumbnail'     => 'image|file|max:1024',
+            'image'         => 'image|file|max:1024',
             'content'       => 'required'
         ]);
         
-        if ($request->file('thumbnail')) {
-            $imageName = $request->file('thumbnail');
+        if ($request->file('image')) {
+            $imageName = $request->file('image');
             $validatedData['image'] = $imageName->hashName();
-            $request->file('thumbnail')->storeAs('public/post-image', $imageName->hashName());
+            $request->file('image')->storeAs('public/post-image', $imageName->hashName());
         }
 
         $validatedData['category_id'] = $request->category;
@@ -62,11 +62,36 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         //
+        return view('admin.blog.posts.edit', [
+            'title_page'    => 'Edit Post',
+            'categories'    => Category::all()->sortBy('name'),
+            'post'          => $post
+        ]);
     }
 
     public function update(Request $request, Post $post)
     {
-        //
+        $validatedData = $request->validate([
+            'category_id'   => 'required',
+            'title'         => 'required|max:255',
+            'slug'          => 'required|unique:posts',
+            'image'         => 'image|file|max:1024',
+            'content'       => 'required'
+        ]);
+
+        if ($request->file('image')) {
+            Storage::delete('public/post-image/'.$post->image);
+            
+            $imageName = $request->file('image');
+            $validatedData['image'] = $imageName->hashName();
+            $request->file('image')->storeAs('public/post-image', $imageName->hashName());
+        }
+        
+        // dd($validatedData, $request);
+        Post::where('id', $post->id)->update($validatedData);
+        Alert::success('Success', 'Data Created Successfully!');
+
+        return redirect(route('post.index'));
     }
 
     public function destroy(Post $post)
