@@ -193,17 +193,14 @@ deleteCategoryBtn.forEach(btn => {
 
 
 /* SECTION POST */
-if (window.location.pathname === '/blog/post/create') {
-  
+if (window.location.pathname.includes('blog')) {
   titlePost.addEventListener('change', () => {
     fetch('/blog/checkSlug?slug=' + titlePost.value)
         .then(response => response.json())
         .then(data => slugPost.value = data.slug)
         .catch(error => console.error(error))
   })
-  
 }
-
 
 
 /* SECTION PRODUCT */
@@ -227,6 +224,7 @@ $('body').on('click', '#create-product', function () {
   // Save from modal
   $('#saveProduct').click(function (e){
     e.preventDefault()
+    e.stopImmediatePropagation();
     const productName     = $('#name').val();
     const productQuantity = $('#quantity').val();
     const productPrice    = $('#price').val();
@@ -242,6 +240,7 @@ $('body').on('click', '#create-product', function () {
           "price": productPrice
         },
         success:function(response){
+            console.log(response);
             Swal.fire({
                 icon: 'success',
                 title: `${response.message}`,
@@ -256,9 +255,9 @@ $('body').on('click', '#create-product', function () {
             // Close modal
             $('#modal-create').modal('hide');
             
-            setTimeout(() => {
-              window.location.reload()
-            }, 2100);
+            // setTimeout(() => {
+            //   window.location.reload()
+            // }, 2100);
             
         },
         error:function(error){
@@ -349,8 +348,8 @@ $(document).ready(function () {
 
 /* Preview image */
 function previewImage() {
-  const image         = document.querySelector('#thumbnail');
-  const imgPreview    = document.querySelector('.img-preview');
+  const image         = document.querySelector('#image');
+  const imgPreview    = document.querySelector('#img-preview');
   
   imgPreview.style.display = 'block';
 
