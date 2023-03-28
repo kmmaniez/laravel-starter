@@ -81,10 +81,10 @@
                                 
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label for="thumbnail" class="form-label">Images</label>
-                                        <img class="img-preview img-fluid mb-3 col-sm-5">
-                                        <input type="file" name="thumbnail" id="thumbnail" class="form-control @error('thumbnail') is-invalid @enderror" onchange="previewImage()">
-                                        @error('thumbnail')
+                                        <label for="image" class="form-label">Thumbnail</label>
+                                        <img class="img-preview img-fluid mb-3 col-sm-5" id="img-preview">
+                                        <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror" onchange="previewImage()">
+                                        @error('image')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
