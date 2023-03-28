@@ -16,7 +16,7 @@
                 <a href="{{ route('post.create') }}" class="btn btn-md btn-primary mb-4"><i class="fas fa-fw fa-user-plus"></i> Add {{ $title_page }}</a>  
         
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="postTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -24,7 +24,6 @@
                                 <th>Slug</th>
                                 <th>Category</th>
                                 <th>Thumbnail</th>
-                                <th>Author</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -36,7 +35,6 @@
                                 <td><span class="badge badge-primary px-2 py-2">{{ $post->slug }}</span></td>
                                 <td>{{ $post->category->name }}</td>
                                 <td style="width: 200px"><img src="{{ asset('storage/post-image/' . $post->image) }}" class="img-fluid" alt=""></td>
-                                <td>{{ $post->author }}</td>
                                 <td>
                                     <form action="/blog/post/{{ $post->slug }}" method="post">
                                         <a class="btn btn-sm btn-success" href="#">Print PDF</a>
