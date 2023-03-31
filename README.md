@@ -27,5 +27,3 @@ This project **has 3 simple features**, that is CRUD for post,category and produ
 The main different is product using **UUID**, category using **ID**, you'll know it later after read and test the app.
 
 Wanna add some features or depedencies? or integrate with front-end framework? feels free to pull request :D
-
-[Medium](https://) | [Dribbble](https://) | [Behance](https://) | [Instagram](https://)
