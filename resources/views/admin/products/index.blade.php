@@ -37,4 +37,6 @@
     </div>
 
     @include('components.admin.product.create-modal')
+    @include('components.admin.product.update-modal')
+
 @endsection
