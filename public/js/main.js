@@ -12,7 +12,8 @@ const deleteCategoryBtn   = document.querySelectorAll('#delete-post');
 
 // Product section
 const deleteProductBtn    = document.querySelectorAll('#deleteProduct');
-// const quantity            = document.querySelector('#quantity');
+const quantity            = document.querySelector('#quantity');
+const quantityUpdate      = document.querySelector('#quantityUpdate');
 
 // Post section
 const titlePost           = document.querySelector('#title');
@@ -210,9 +211,18 @@ if (window.location.pathname === '/products') {
   quantity.addEventListener('keyup', () => {
     if (quantity.value === '') {
       $('#quantity').addClass('is-invalid')
-      $('#invalidQuantity').text(`Value must be a number`)
+      $('#invalidQuantity').text(`Value must be a number & required`)
     }else{
       quantity.classList.remove('is-invalid');
+    }
+  })
+
+  quantityUpdate.addEventListener('keyup', () => {
+    if (quantityUpdate.value === '') {
+      $('#quantityUpdate').addClass('is-invalid')
+      $('#invalidQuantityUpdate').text(`Value must be a number & required`)
+    }else{
+      quantityUpdate.classList.remove('is-invalid');
     }
   })
 }
@@ -240,7 +250,6 @@ $('body').on('click', '#create-product', function () {
           "price": productPrice
         },
         success:function(response){
-            console.log(response);
             Swal.fire({
                 icon: 'success',
                 title: `${response.message}`,
@@ -254,11 +263,7 @@ $('body').on('click', '#create-product', function () {
             $('#price').val('');
             // Close modal
             $('#modal-create').modal('hide');
-            
-            // setTimeout(() => {
-            //   window.location.reload()
-            // }, 2100);
-            
+            $('#productDataTable').DataTable().ajax.reload();
         },
         error:function(error){
           console.log(error.responseJSON);
@@ -280,6 +285,86 @@ $('body').on('click', '#create-product', function () {
 
     });
   })
+});
+
+// modal edit
+$('body').on('click', '#edit-post', function (e) {
+
+  e.preventDefault()
+  let productId     = $(this).data('id');
+  let url           = window.location.pathname + '/' + productId;
+
+  // Get data
+  $.ajax({
+    url: url,
+    type: "GET",
+    cache: false,
+    success:function(response){
+      $('#nameUpdate').val(response.data.name);
+      $('#quantityUpdate').val(response.data.quantity);
+      $('#priceUpdate').val(response.data.price);
+      $('#modal-update').modal('show');
+    }
+  });
+  
+  // Process update
+  $('#updateProduct').click(function(e) {
+    e.preventDefault();
+
+    let productName     =  $('#nameUpdate').val();
+    let productQuantity =  $('#quantityUpdate').val();
+    let productPrice    =  $('#priceUpdate').val();
+
+    $.ajax({
+        url: url,
+        type: "PUT",
+        cache: false,
+        data: {
+            "id": productId,
+            "name": productName,
+            "quantity": productQuantity,
+            "price": productPrice,
+            "_token": token
+        },
+        // If success
+        success:function(response){
+          console.log(response);
+            Swal.fire({
+                type: 'success',
+                icon: 'success',
+                title: `${response.message}`,
+                showConfirmButton: false,
+                timer: 2000,
+            });
+            
+            $('#modal-update').modal('hide');
+            $('#productDataTable').DataTable().ajax.reload();
+  
+        },
+        // If fails
+        error:function(error){
+          console.log(error.responseJSON);
+
+          if(error.responseJSON.errors.hasOwnProperty('name')) {
+            $('#nameUpdate').addClass('is-invalid')
+            $('#invalidNameUpdate').text(`${error.responseJSON.errors.name[0]}`)
+          }
+
+          if(error.responseJSON.errors.hasOwnProperty('quantity')) {
+            $('#quantityUpdate').addClass('is-invalid')
+            $('#invalidQuantityUpdate').text(`${error.responseJSON.errors.quantity[0]}`)
+          }
+          
+          if(error.responseJSON.errors.hasOwnProperty('price')) {
+            $('#priceUpdate').addClass('is-invalid')
+            $('#invalidPriceUpdate').text(`${error.responseJSON.errors.price[0]}`)
+          }
+        }
+  
+    });
+    
+  });
+
 });
 
 // modal delete
