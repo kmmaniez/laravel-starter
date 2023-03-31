@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Route Products
-    Route::resource('products', ProductController::class)->only(['index','create','store','edit','update','destroy']);
+    Route::resource('products', ProductController::class)->only(['index','create','store','show','edit','update','destroy']);
     
     // Route Blog (prefix) => localhost/blog/*
     Route::prefix('blog')->group(function () {
