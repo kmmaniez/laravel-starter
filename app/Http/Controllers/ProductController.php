@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Alert;
 use App\Http\Requests\StoreProductRequest;
+use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -19,7 +20,7 @@ class ProductController extends Controller
             return DataTables::eloquent($users)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-                        $actionBtn = '<a href="/products/'.$row->id.'" id="edit-post" class="btn btn-success btn-sm">Edit</a> <a href="#" data-id="'.$row->id.'" id="deleteProduct" class="btn btn-danger btn-sm">Delete</a>';
+                        $actionBtn = '<a href="/products/'.$row->id.'" data-id="'.$row->id.'" id="edit-post" class="btn btn-success btn-sm">Edit</a> <a href="#" data-id="'.$row->id.'" id="deleteProduct" class="btn btn-danger btn-sm">Delete</a>';
                         return $actionBtn;
                     })
                     ->rawColumns(['action'])
@@ -53,6 +54,16 @@ class ProductController extends Controller
         ]);
     }
 
+    public function show(Product $product)
+    {
+        // Return response
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail Data Category',
+            'data'    => $product  
+        ]); 
+    }
+
     public function edit(Product $product)
     {
         return view('admin.products.edit', [
@@ -64,11 +75,25 @@ class ProductController extends Controller
     public function update(StoreProductRequest $request, Product $product)
     {
         $validated = $request->validated();
-        
-        Product::where('id', $product->id)->update($validated);
-        Alert::success('Success', 'Data Updated Successfully!');
 
-        return redirect(route('products.index'));
+        // If validation fails
+        if (!$validated) {
+            return response()->json($validated->errors(), 422);
+        }
+
+        // Update product
+        $product->update([
+            'name'      => $request->name,
+            'quantity'  => $request->quantity,
+            'price'     => $request->price
+        ]);
+
+        // Return result response
+        return response()->json([
+            'success'   =>  true,
+            'message'   =>  'Data Updated Successfully',
+            'data'      =>  $product
+        ]);
     }
 
     public function destroy(Product $product)
